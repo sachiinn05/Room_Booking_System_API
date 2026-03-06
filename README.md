@@ -1,6 +1,6 @@
 # 🏨 Room Booking System API
 
-A backend API for a **Room Booking System** built using **Node.js, Express, and MySQL**.
+A backend API for a **Room Booking System** built with **Node.js, Express, and MySQL**.
 
 This system allows users to:
 
@@ -8,7 +8,7 @@ This system allows users to:
 * View available rooms
 * Check room availability for a selected date range
 * Book a room
-* Prevent double booking using date overlap validation
+* Prevent double bookings using date overlap validation
 
 ---
 
@@ -23,33 +23,34 @@ This system allows users to:
 
 ---
 
-# 📂 Project Structure
+# 📁 Project Structure
 
+```
 room-booking-api
 │
 ├── src
-│
-├── config
-│   └── database.js
-│
-├── models
-│   ├── user.js
-│   ├── room.js
-│   └── booking.js
-│
-├── routes
-│   ├── auth.js
-│   └── booking.js
-│
-├── middleware
-│   └── auth.js
-│
-└── app.js
+│   ├── config
+│   │   └── database.js
+│   │
+│   ├── models
+│   │   ├── user.js
+│   │   ├── room.js
+│   │   └── booking.js
+│   │
+│   ├── routes
+│   │   ├── auth.js
+│   │   └── booking.js
+│   │
+│   ├── middleware
+│   │   └── auth.js
+│   │
+│   └── app.js
 │
 ├── README.md
 ├── architecture-notes.txt
 ├── database-schema.sql
 └── postman-collection.json
+```
 
 ---
 
@@ -57,14 +58,18 @@ room-booking-api
 
 ## 1️⃣ Clone Repository
 
+```
 git clone https://github.com/YOUR_USERNAME/room-booking-api.git
 cd room-booking-api
+```
 
 ---
 
 ## 2️⃣ Install Dependencies
 
+```
 npm install
+```
 
 ---
 
@@ -72,12 +77,16 @@ npm install
 
 Login to MySQL:
 
+```
 mysql -u root -p
+```
 
 Create database:
 
+```
 CREATE DATABASE room_booking;
 USE room_booking;
+```
 
 ---
 
@@ -85,18 +94,19 @@ USE room_booking;
 
 Run this SQL:
 
+```
 CREATE TABLE users (
-id INT AUTO_INCREMENT PRIMARY KEY,
-firstName VARCHAR(100),
-lastName VARCHAR(100),
-emailId VARCHAR(100) UNIQUE,
-password VARCHAR(255)
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ firstName VARCHAR(100),
+ lastName VARCHAR(100),
+ emailId VARCHAR(100) UNIQUE,
+ password VARCHAR(255)
 );
 
 CREATE TABLE rooms (
-id INT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(100),
-price_per_night DECIMAL(10,2)
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ name VARCHAR(100),
+ price_per_night DECIMAL(10,2)
 );
 
 INSERT INTO rooms (name, price_per_night)
@@ -106,26 +116,31 @@ VALUES
 ('Luxury Suite',5000);
 
 CREATE TABLE bookings (
-id INT AUTO_INCREMENT PRIMARY KEY,
-user_id INT,
-room_id INT,
-start_date DATE,
-end_date DATE,
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ user_id INT,
+ room_id INT,
+ start_date DATE,
+ end_date DATE,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-FOREIGN KEY (user_id) REFERENCES users(id),
-FOREIGN KEY (room_id) REFERENCES rooms(id)
+ FOREIGN KEY (user_id) REFERENCES users(id),
+ FOREIGN KEY (room_id) REFERENCES rooms(id)
 );
+```
 
 ---
 
-# ▶️ Run the Server
+# ▶️ Run Server
 
+```
 npm run dev
+```
 
 Server runs on:
 
+```
 http://localhost:3000
+```
 
 ---
 
@@ -133,86 +148,122 @@ http://localhost:3000
 
 ## 🔐 Authentication
 
+### Register
+
+```
 POST /signup
+```
 
-Body example:
+Body Example:
 
+```
 {
-"firstName": "Sachin",
-"lastName": "Singh",
-"emailId": "[sachin@gmail.com](mailto:sachin@gmail.com)",
-"password": "123456"
+ "firstName": "Sachin",
+ "lastName": "Singh",
+ "emailId": "sachin@gmail.com",
+ "password": "123456"
 }
+```
 
 ---
 
+### Login
+
+```
 POST /login
+```
 
-Body example:
+Body Example:
 
+```
 {
-"emailId": "[sachin@gmail.com](mailto:sachin@gmail.com)",
-"password": "123456"
+ "emailId": "sachin@gmail.com",
+ "password": "123456"
 }
+```
 
 ---
 
+### Logout
+
+```
 POST /logout
+```
 
 ---
 
 # 🏨 Rooms
 
+### Get All Rooms
+
+```
 GET /rooms
+```
 
-Example response:
+Example Response:
 
+```
 [
-{
-"id": 1,
-"name": "Standard Room",
-"price_per_night": 2000
-},
-{
-"id": 2,
-"name": "Deluxe Room",
-"price_per_night": 3500
-}
+ {
+  "id": 1,
+  "name": "Standard Room",
+  "price_per_night": 2000
+ },
+ {
+  "id": 2,
+  "name": "Deluxe Room",
+  "price_per_night": 3500
+ }
 ]
+```
 
 ---
 
 # 📅 Booking
 
+### Check Availability
+
+```
 POST /check-availability
+```
 
 Body:
 
+```
 {
-"roomId": 1,
-"startDate": "2026-03-10",
-"endDate": "2026-03-12"
+ "roomId": 1,
+ "startDate": "2026-03-10",
+ "endDate": "2026-03-12"
 }
+```
 
 ---
 
+### Book Room
+
+```
 POST /book-room
+```
 
 Body:
 
+```
 {
-"roomId": 1,
-"startDate": "2026-03-10",
-"endDate": "2026-03-12"
+ "roomId": 1,
+ "startDate": "2026-03-10",
+ "endDate": "2026-03-12"
 }
+```
 
 ---
 
 # 🧠 Booking Logic
 
-The system prevents **overlapping bookings** using the following SQL condition:
+To prevent **overlapping bookings**, the system checks existing bookings using the SQL condition:
 
+```
 NOT (end_date < startDate OR start_date > endDate)
+```
 
 If a booking exists in the selected date range, the room cannot be booked again.
 

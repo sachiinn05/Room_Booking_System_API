@@ -1,0 +1,33 @@
+Room Booking System – Architecture Notes
+
+1. Preventing Overlapping Bookings
+   The system checks for existing bookings before creating a new one.
+   A SQL condition is used to detect date overlaps:
+
+NOT (end_date < startDate OR start_date > endDate)
+
+If any record exists for the same room in the selected date range, the booking request is rejected.
+
+---
+
+2. Handling Concurrent Booking Requests
+   The booking process runs inside a database transaction.
+
+Steps:
+
+1. Start transaction
+2. Check room availability
+3. Insert booking if available
+4. Commit transaction
+
+If two users try to book at the same time, the transaction ensures that only one booking succeeds.
+
+---
+
+3. Future Scalability
+   To scale the system:
+
+• Add database indexing on room_id and booking dates
+• Use Redis caching for availability checks
+• Use load balancers for handling more traffic
+• Split booking service into microservices if needed

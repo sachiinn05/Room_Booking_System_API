@@ -1,0 +1,136 @@
+{
+  "info": {
+    "name": "Room Booking System API",
+    "_postman_id": "room-booking-api-new",
+    "description": "Postman collection with new test data for Room Booking System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Signup - New User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Rahul\",\n  \"lastName\": \"Sharma\",\n  \"emailId\": \"rahul.sharma@test.com\",\n  \"password\": \"123456\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/signup",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["signup"]
+        }
+      }
+    },
+    {
+      "name": "Login - Rahul",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"emailId\": \"rahul.sharma@test.com\",\n  \"password\": \"123456\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["login"]
+        }
+      }
+    },
+    {
+      "name": "Get Rooms",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/rooms",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["rooms"]
+        }
+      }
+    },
+    {
+      "name": "Check Room Availability",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"roomId\": 2,\n  \"startDate\": \"2026-05-10\",\n  \"endDate\": \"2026-05-12\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/check-availability",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["check-availability"]
+        }
+      }
+    },
+    {
+      "name": "Book Room",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"roomId\": 2,\n  \"startDate\": \"2026-05-10\",\n  \"endDate\": \"2026-05-12\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/book-room",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["book-room"]
+        }
+      }
+    },
+    {
+      "name": "Test Overlapping Booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"roomId\": 2,\n  \"startDate\": \"2026-05-11\",\n  \"endDate\": \"2026-05-13\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/book-room",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["book-room"]
+        }
+      }
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:3000/logout",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["logout"]
+        }
+      }
+    }
+  ]
+}

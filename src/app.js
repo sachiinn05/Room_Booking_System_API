@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const authRouter = require("./routes/auth");
+const bookingRouter = require("./routes/booking");
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(cookieParser());
 
 
 app.use("/", authRouter);
+app.use("/",bookingRouter)
 
 
 
